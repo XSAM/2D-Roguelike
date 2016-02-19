@@ -2,17 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviour
 {
-    public static GameManager instance=null;
+    public static GameManager instance = null;
     private BoardManager boardScript;
     private int level = 3;
-    
+    public int playerFoodPoint = 100;
+    [HideInInspector]
+    public bool playersTurn = true;
+
     void Awake()
     {
-        if(instance==null)
+        if (instance == null)
             instance = null;
-        else if(instance!=this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -20,16 +23,20 @@ public class GameManager : MonoBehaviour
         boardScript = GetComponent<BoardManager>();
         InitGame();
     }
-    
+
     void InitGame()
     {
         boardScript.SetupScene(level);
     }
-    
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
+
+    public void GameOver()
+    {
+        enabled = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }
