@@ -7,7 +7,7 @@ public class Wall : MonoBehaviour
     public int hp = 4;
 
     private SpriteRenderer spriteRenderer;
-
+    
 
     void Awake()
     {
