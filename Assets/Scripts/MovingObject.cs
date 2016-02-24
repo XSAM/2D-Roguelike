@@ -41,9 +41,9 @@ public abstract class MovingObject : MonoBehaviour
     protected IEnumerator smoothMovement(Vector3 end)
     {
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-        while (sqrRemainingDistance > float.Epsilon)
-        {
-            Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime * Time.deltaTime);
+        while (sqrRemainingDistance > 1e-5f)
+        {   
+            Vector3 newPosition = Vector3.Lerp(rb2D.position, end, 0.2f);
             rb2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             yield return null;
