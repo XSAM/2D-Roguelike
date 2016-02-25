@@ -82,15 +82,20 @@ public class Player : MovingObject
         hitWall.DamageWall(wallDamage);
         animator.SetTrigger("playerChop");
         //throw new System.NotImplementedException();
-    }    private void Restart()
+    }
+
+    private void Restart()
     {
         Application.LoadLevel(Application.loadedLevel);
-    }    public void LoseFood(int loss)
+    }
+
+    public void LoseFood(int loss)
     {
         animator.SetTrigger("playerHit");
         food -= loss;
         CheckIfGameOver();
-    }
+    }
+
 
     private void CheckIfGameOver()
     {
