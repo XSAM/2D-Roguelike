@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MovingObject 
 {
@@ -14,6 +15,7 @@ public class Player : MovingObject
 	// Use this for initialization
 	protected override void Start () 
 	{
+        GameManager.instance.Start();
         animator = GetComponent<Animator>();
         food = GameManager.instance.playerFoodPoint;
         base.Start();
@@ -21,7 +23,8 @@ public class Player : MovingObject
 
     private void OnDisable()
     {
-        GameManager.instance.playerFoodPoint = food;
+        Debug.Log("disable:" + food);
+        GameManager.instance.playerFoodPoint = 100;
     }
 	
 	// Update is called once per frame
@@ -52,9 +55,9 @@ public class Player : MovingObject
     {
         food--;
         base.AttemptMove<T>(xDir, yDir);
-        RaycastHit2D hit;
+        //RaycastHit2D hit;
         CheckIfGameOver();
-        //GameManager.instance.playersTurn = false;
+        GameManager.instance.playersTurn = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,6 +65,7 @@ public class Player : MovingObject
         if(other.tag=="Exit")
         {
             Invoke("Restart", restartLevelDelay);
+            GameManager.instance.enemies = new List<Enemy>();
             enabled=false;
         }
         else if(other.tag=="Food")
