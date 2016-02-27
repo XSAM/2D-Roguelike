@@ -44,10 +44,15 @@ public abstract class MovingObject : MonoBehaviour
         while (sqrRemainingDistance > 1e-5f)
         {   
             Vector3 newPosition = Vector3.Lerp(rb2D.position, end, 0.2f);
-            rb2D.MovePosition(newPosition);
+            //rb2D.MovePosition(newPosition);
+            rb2D.position = newPosition;
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+            //Debug.Log("RemainingDistance:" + sqrRemainingDistance);
             yield return null;
         }
+        //rb2D.MovePosition(end);
+        rb2D.position = end;
+        //Debug.Log("End:"+end);
     }
 
     protected virtual void AttemptMove<T>(int xDir, int yDir)
