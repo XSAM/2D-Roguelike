@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Awake");
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -27,14 +28,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
     }
-    
-    public void Start()
+
+    void OnEnable()
     {
-        enabled=true;;
-        Debug.Log("Invoke");
+        Debug.Log("Enable");
         boardScript = GetComponent<BoardManager>();
         enemiesMoving = false;
         InitGame();
+    }
+    
+    void Start()
+    {
+        Debug.Log("Invoke");
+
     }
 
     void InitGame()
@@ -52,7 +58,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("GameManager.instance.playerFoodPoint:" + GameManager.instance.playerFoodPoint);
+        //Debug.Log("GameManager.instance.playerFoodPoint:" + GameManager.instance.playerFoodPoint);
         if(playersTurn||enemiesMoving)
             return;
         StartCoroutine(MoveEnemies());

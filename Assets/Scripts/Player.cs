@@ -15,7 +15,7 @@ public class Player : MovingObject
 	// Use this for initialization
 	protected override void Start () 
 	{
-        GameManager.instance.Start();
+        GameManager.instance.enabled = true;
         animator = GetComponent<Animator>();
         food = GameManager.instance.playerFoodPoint;
         base.Start();
@@ -24,7 +24,12 @@ public class Player : MovingObject
     private void OnDisable()
     {
         Debug.Log("disable:" + food);
-        GameManager.instance.playerFoodPoint = 100;
+        GameManager.instance.playerFoodPoint = food;
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("Destroy");
     }
 	
 	// Update is called once per frame
@@ -65,7 +70,6 @@ public class Player : MovingObject
         if(other.tag=="Exit")
         {
             Invoke("Restart", restartLevelDelay);
-            GameManager.instance.enemies = new List<Enemy>();
             enabled=false;
         }
         else if(other.tag=="Food")
@@ -90,6 +94,8 @@ public class Player : MovingObject
 
     private void Restart()
     {
+        GameManager.instance.enemies = new List<Enemy>();
+        GameManager.instance.enabled = false;
         Application.LoadLevel(Application.loadedLevel);
     }
 
